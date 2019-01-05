@@ -22,6 +22,31 @@
 </head>
 
 <body class="" style="direction: rtl;">
+
+<?php
+
+	ob_start(); // Output Buffering Start
+
+	session_start();
+
+	if (isset($_SESSION['userId'])) {
+
+		$pageTitle = 'Dashboard';
+
+		include 'layout/init.php';
+
+		/* Start Dashboard Page */
+
+		$numUsers = 6; // Number Of Latest Users
+
+		$latestUsers = getLatest("*", "user", "ID", $numUsers); // Latest Users Array
+
+		$numReq = 6; // Number Of Latest Items
+
+		$latestReq = getLatest("*", 'request', 'ID', $numReq); }; // Latest Items Array 
+
+		?>
+
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <div class="logo">
@@ -148,7 +173,7 @@
                     <i class="material-icons">store</i>
                   </div>
                   <p class="card-category"> مجموع المستخدمين </p>
-                  <h3 class="card-title"> 234 </h3> <br>
+                  <h3 class="card-title"> <?php echo countItems('ID', 'user') ?> </h3> <br>
                 </div>
               </div>
             </div>
@@ -159,7 +184,7 @@
                     <i class="material-icons">info_outline</i>
                   </div>
                   <p class="card-category"> مجموع الوظائف</p>
-                  <h3 class="card-title">75</h3> <br>
+                  <h3 class="card-title"> <?php echo countItems('ID', 'request') ?> </h3> <br>
                 </div>
               </div>
             </div>
@@ -204,41 +229,34 @@
               <div class="card">
                 <div class="card-header card-header-tabs card-header-warning">
                   <h4 class="card-title">جدول المستخدمين </h4>
-                  <p class="card-category"> احدث 6 مستخدمين تم تسجيلهم </p>
+                  <p class="card-category"> احدث <?php echo $numUsers ?> مستخدمين تم تسجيلهم </p>
                 </div>
                 <div class="card-body table-responsive">
                   <table class="table table-hover">
                     <thead class="text-warning">
                       <th>رقم المستخدم</th>
                       <th>الاسم </th>
-                      <th>البريد الالكتروني</th>
-                      <th>المدينة</th>
+                      <th> البريد الالكتروني</th>
+                      <th> التاريخ</th>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Dakota Rice</td>
-                        <td>$36,738</td>
-                        <td>Niger</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Minerva Hooper</td>
-                        <td>$23,789</td>
-                        <td>Curaçao</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Sage Rodriguez</td>
-                        <td>$56,142</td>
-                        <td>Netherlands</td>
-                      </tr>
-                      <tr>
-                        <td>4</td>
-                        <td>Philip Chaney</td>
-                        <td>$38,735</td>
-                        <td>Korea, South</td>
-                      </tr>
+
+                    <?php
+									if (! empty($latestUsers)) {
+										foreach ($latestUsers as $user) {
+                      echo "<tr>";
+                      echo "<td>" . $user['ID'] . " </td> ";
+                      echo "<td>" . $user['firstName'] . " " . $user['lastName'] . " </td> ";
+                      echo "<td>" . $user['email'] . " </td> ";
+                      echo "<td>" . $user['date'] . " </td> ";
+
+                      echo "</tr>";
+                    }
+									} else {
+										echo ' لا يوجد مستخدمين للعرض';
+									}
+								?>
+                        
                     </tbody>
                   </table>
                 </div>
@@ -248,41 +266,31 @@
                 <div class="card">
                   <div class="card-header card-header-tabs card-header-primary">
                     <h4 class="card-title"> جدول الوظائف</h4>
-                    <p class="card-category">احدث 6 وظائف تم نشرها</p>
+                    <p class="card-category">احدث <?php echo $numReq ?> وظائف تم نشرها</p>
                   </div>
                   <div class="card-body table-responsive">
                     <table class="table table-hover">
                       <thead class="text-warning">
                         <th>رقم الوظيفة</th>
                         <th>العنوان</th>
-                        <th>مجال العمل</th>
                         <th>السعر</th>
+                        <th> التاريخ</th>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>1</td>
-                          <td>Dakota Rice</td>
-                          <td>$36,738</td>
-                          <td>Niger</td>
-                        </tr>
-                        <tr>
-                          <td>2</td>
-                          <td>Minerva Hooper</td>
-                          <td>$23,789</td>
-                          <td>Curaçao</td>
-                        </tr>
-                        <tr>
-                          <td>3</td>
-                          <td>Sage Rodriguez</td>
-                          <td>$56,142</td>
-                          <td>Netherlands</td>
-                        </tr>
-                        <tr>
-                          <td>4</td>
-                          <td>Philip Chaney</td>
-                          <td>$38,735</td>
-                          <td>Korea, South</td>
-                        </tr>
+                      <?php
+                        if (! empty($latestReq)) {
+                          foreach ($latestReq as $request) {
+                              echo "<tr>";
+                              echo "<td>" . $request['ID'] . " </td> ";
+                              echo "<td>" . $request['title'] . " </td> ";
+                              echo "<td>" . $request['initialPrice'] . " </td> ";
+                              echo "<td>" . $request['time'] . " </td> ";
+                              echo "</tr>";
+                            }
+                          } else {
+                            echo '  لا يوجد وظائف للعرض';
+                          }
+							      	?>
                       </tbody>
                     </table>
                   </div>
@@ -526,5 +534,7 @@
     });
   </script>
 </body>
-
+<?php
+ob_end_flush(); // Release The Output
+?>
 </html>
