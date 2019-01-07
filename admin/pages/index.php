@@ -20,6 +20,55 @@
 	<link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
 <body  >
+<?php
+	session_start();
+	$noNavbar = '';
+	$pageTitle = ' تسجيل الدخول ';
+
+	if(isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
+		header('Location: dashboard.php'); // Redirect To Dashboard Page
+	}
+
+	include 'layout/init.php';
+
+	// Check If User Coming From HTTP Post Request
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+		$email = $_POST['email'];
+		$password = $_POST['pass'];
+	
+
+		// Check If The User Exist In Database
+
+		$stmt = $con->prepare("SELECT 
+									ID, email, Password 
+								FROM 
+									user
+								WHERE 
+									email = ? 
+								AND 
+									Password = ? 
+								AND 
+									userType_ID = 3
+								LIMIT 1");
+
+		$stmt->execute(array($email, $password));
+		$row = $stmt->fetch();
+		$count = $stmt->rowCount();
+
+		// If Count > 0 This Mean The Database Contain Record About This Username
+
+		if ($count > 0) {
+			$_SESSION['userId'] = $row['ID']; // Register Session Name
+			$_SESSION['email'] = $row['email']; // Register Session ID
+			header('Location: dashboard.php'); // Redirect To Dashboard Page
+			exit();
+		}
+
+	}
+
+?>
 	
 	<div class="limiter">
 		<div class="container-login100" >
@@ -28,7 +77,7 @@
 					<img src="../assets/img/img-01.png" alt="IMG">
 				</div>
 
-				<form class="login100-form validate-form" style="direction : rtl">
+				<form class="login100-form validate-form" action="<?php echo $_SERVER['PHP_SELF'] ?>" style="direction : rtl" method = "post">
 					<span class="login100-form-title">
 						تسجيل دخول 
 					</span>
