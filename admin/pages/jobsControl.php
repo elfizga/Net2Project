@@ -214,7 +214,8 @@
                                 echo "<td>" . $item['spec'] ."</td>";
                                 echo "<td>" . $item['time'] ."</td>";
                                 echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='btn btn-primary btn-link btn-sm'> <i class='material-icons'>edit</i> </button>" . " </td> ";
-                                echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm'> <i class='material-icons'>close</i> </button> " . " </td> ";
+                                echo "<td> <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm' id='delReq'
+                                 data-id='". $item['ID'] ."'> <i class='material-icons'>close</i> </button> </td> ";
                                 echo "</tr>";
                             } 
                           ?>
@@ -286,7 +287,36 @@
     <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="../assets/demo/demo.js"></script>
+    
+    <script>
+   $(document).ready(function() {
+
+$("#delReq").click(function() {
+var btn = $(this);
+	var theId = $("#delReq").data("id"); 
+$.ajax({
+	url: 'delete-job-function.php' ,
+	data: { ID : theId },
+	type : 'POST' })
+	
+	.done(function(data){
+		btn.parent("td").parent("tr").fadeOut(500, function() {
+		btn.remove(); });
+		console.log(data);
+
+	}) 
+
+	.fail(function(data){
+		console.log("error");
+ 		 alert("error") ;
+	});
+	
+}); 
+});
+        
+    </script>
 </body>
+
 <?php
 ob_end_flush(); // Release The Output
 ?>
