@@ -1,3 +1,19 @@
+<?php 
+
+ ob_start(); // Output Buffering Start
+  
+ $pageTitle = 'Members';
+
+
+  include 'layout/init.php';
+  
+  $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
+  
+ 
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -114,9 +130,10 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="personalPage"> الملف الشخصي </a>
+                  <a class="dropdown-item" href="#">الصفحة الشخصية</a>
+                  
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="logout.php"> تسجيل الخروج</a>
+                  <a class="dropdown-item" href="logout.php">تسجيل الخروج</a>
                 </div>
               </li>
             </ul>
@@ -125,6 +142,38 @@
       </nav>
       <!-- End Navbar -->
       <div class="content">
+      <?php
+      if ($do == 'Manage') { // Manage Members Page
+
+$query = '';
+
+
+
+// Select All  Except Admin 
+
+$stmt = $con->prepare("SELECT *
+,city.name as city
+ FROM user
+ INNER JOIN city ON user.city_ID = city.ID
+  WHERE userType_ID != 3 $query ORDER BY user.ID DESC");
+
+// Execute The Statement
+
+$stmt->execute();
+
+// Assign To Variable 
+
+$rows = $stmt->fetchAll();
+
+if (! empty($rows)) {
+
+?>
+
+
+
+
+
+
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
@@ -163,165 +212,35 @@
                         </th>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            1
-                          </td>
-                          <td>
-                            Dakota Rice
-                          </td>
-                          <td>
-                            Niger
-                          </td>
-                          <td>
-                            $36,738
-                          </td>
-                          <td class="text-primary">
-                            $36,738
-                          </td>
-                           <td>
-                            16/11/2018
-                           </td>
-                           <td>
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                  <i class="material-icons">edit</i>
-                              </button>
-                              </td>
-                              <td>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                  <i class="material-icons">close</i>
-                              </button>
-                           </td>
-                        </tr>
-                        <tr>
-                            <td>
-                              1
-                            </td>
-                            <td>
-                              Dakota Rice
-                            </td>
-                            <td>
-                              Niger
-                            </td>
-                            <td>
-                              $36,738
-                            </td>
-                            <td class="text-primary">
-                              $36,738
-                            </td>
-                             <td>
-                              16/11/2018
-                             </td>
-                             <td>
-                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                    <i class="material-icons">edit</i>
-                                </button>
-                                </td>
-                                <td>
-                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                    <i class="material-icons">close</i>
-                                </button>
-                             </td>
-                          </tr>
-                          <tr>
-                              <td>
-                                1
-                              </td>
-                              <td>
-                                Dakota Rice
-                              </td>
-                              <td>
-                                Niger
-                              </td>
-                              <td>
-                                $36,738
-                              </td>
-                              <td class="text-primary">
-                                $36,738
-                              </td>
-                               <td>
-                                16/11/2018
-                               </td>
-                               <td>
-                                  <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                      <i class="material-icons">edit</i>
-                                  </button>
-                                  </td>
-                                  <td>
-                                  <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                      <i class="material-icons">close</i>
-                                  </button>
-                               </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                  1
-                                </td>
-                                <td>
-                                  Dakota Rice
-                                </td>
-                                <td>
-                                  Niger
-                                </td>
-                                <td>
-                                  $36,738
-                                </td>
-                                <td class="text-primary">
-                                  $36,738
-                                </td>
-                                 <td>
-                                  16/11/2018
-                                 </td>
-                                 <td>
-                                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                    </td>
-                                    <td>
-                                    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                 </td>
-                              </tr>
-                              <tr>
-                                  <td>
-                                    1
-                                  </td>
-                                  <td>
-                                    Dakota Rice
-                                  </td>
-                                  <td>
-                                    Niger
-                                  </td>
-                                  <td>
-                                    $36,738
-                                  </td>
-                                  <td class="text-primary">
-                                    $36,738
-                                  </td>
-                                   <td>
-                                    16/11/2018
-                                   </td>
-                                   <td>
-                                      <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                          <i class="material-icons">edit</i>
-                                      </button>
-                                      </td>
-                                      <td>
-                                      <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                          <i class="material-icons">close</i>
-                                      </button>
-                                   </td>
-                                </tr>
+                       <?php
+                       foreach($rows as $row) {
+                        echo "<tr>";
+                          echo "<td>" . $row['ID'] . "</td>";
+                          echo "<td>" . $row['firstName'] . "</td>";
+                          echo "<td>" . $row['lastName'] . "</td>";
+                          echo "<td>" . $row['email'] . "</td>";
+                          echo "<td>" . $row['phone'] ."</td>";
+                          echo "<td>" . $row['city'] ."</td>";
+                          
+                          echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='btn btn-primary btn-link btn-sm'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+                          echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm'> <i class='material-icons'>close</i> </button> " . " </td> ";
+                            
+                          
+                        echo "</tr>";
+                      }
+                       ?>
+                                
                       </tbody>
                     </table>
                   </div>
+                  
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <?php }} ?>
       <footer class="footer">
         <div class="container-fluid">
           <div class="copyright float-right">
@@ -552,3 +471,4 @@
 </body>
 
 </html>
+
