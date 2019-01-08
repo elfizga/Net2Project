@@ -113,7 +113,7 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="personalPage"> الملف الشخصي </a>
+                  <a class="dropdown-item" href="personalPage.php"> الملف الشخصي </a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="logout.php"> تسجيل الخروج</a>
                 </div>

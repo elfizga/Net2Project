@@ -130,7 +130,7 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="#">الصفحة الشخصية</a>
+                  <a class="dropdown-item" href="personalPage.php">الصفحة الشخصية</a>
                   
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="logout.php">تسجيل الخروج</a>
@@ -223,7 +223,8 @@ if (! empty($rows)) {
                           echo "<td>" . $row['city'] ."</td>";
                           
                           echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='btn btn-primary btn-link btn-sm'> <i class='material-icons'>edit</i> </button>" . " </td> ";
-                          echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm'> <i class='material-icons'>close</i> </button> " . " </td> ";
+                          echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm' id='delrequest' 
+                          data-id='". $row['ID'] ."'> <i class='material-icons'>close</i> </button> " . " </td> ";
                             
                           
                         echo "</tr>";
@@ -467,8 +468,32 @@ if (! empty($rows)) {
         });
       });
     });
+   $(document).ready(function(){
+     $("#delrequest").click(function(){
+       var ths = $(this);
+       var thId = $("#delRequest").data("id");
+
+       $.ajax({
+         url: "delete-member-function.php",
+         data: {ID : thId},
+         type: 'POST'
+       })
+       .done(function(data){
+         ths.parent("td").parent("tr").fadeOut(600, function(){
+           ths.remove();
+         });
+         console.log(data);
+       })
+       .fail(function(data){
+          alert("error");
+       });
+
+     });
+   });
   </script>
 </body>
-
+<?php
+ob_end_flush(); // Release The Output
+?>
 </html>
 
