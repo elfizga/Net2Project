@@ -215,21 +215,103 @@
                                 echo "<td>" . $item['initialPrice'] . "</td>";
                                 echo "<td>" . $item['spec'] ."</td>";
                                 echo "<td>" . $item['time'] ."</td>";
-                                echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='btn btn-primary btn-link btn-sm'> <i class='material-icons'>edit</i> </button>" . " </td> ";
-                                echo "<td> <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm' id='delReq'
+                                echo "<td>" . " <button type='button'  title='Edit Task' class='btn btn-primary btn-link btn-sm' data-toggle='modal' data-target='#editModal'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+                                echo "<td> <button type='button'  title='Remove' class='btn btn-danger btn-link btn-sm' id='delReq'
                                  data-id='". $item['ID'] ."'> <i class='material-icons'>close</i> </button> </td> ";
                                 echo "</tr>";
                             } 
-                          ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-
-                                </div>
+                            ?>
+                                    <!-- Modal -->
+                                                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle"> تعديل بيانات الوظيفة</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    <form>
+                                                                <div class="row">
+                                                                <div class="col-md-7">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> عنوان الوظيفة </label>
+                                                                    <input type="text" class="form-control" > 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> المدينة </label>
+                                                                    <input type="email" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> السعر </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> نوع الوظيفة </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> البريد الإلكتروني </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> مجال العمل </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> تاريخ النشر </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                    
+                                                                        <label class="bmd-label-floating"> وصف الوظيفة </label>
+                                                                        <textarea class="form-control" rows="5"></textarea>
+                                                                    
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                            </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                                                        <button type="button" class="btn btn-primary">حفظ التغيرات</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                             </tbody>
+                                         </table>
+                                     </div>
+                                 </div>
+                               </div>
                             </div>
                         </div>
                     </div>
+
                     <?php }}
 					 ?>
             </div>
@@ -306,7 +388,7 @@ $("#delReq").click(function() {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: ' أجل , قم بالمسح !',
-        cancelButtonText: '  إلغاء '
+        cancelButtonText: '  إغلاق '
         }).then((result) => {
         if (result.value) {
             $.ajax({
