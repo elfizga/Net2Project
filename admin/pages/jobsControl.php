@@ -32,6 +32,8 @@
     <!-- CSS Files -->
     <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
     <link href="../assets/css/material-dashboard-rtl.css?v=1.1" rel="stylesheet" />
+    <link href="../assets/css/sweetalert2.min.css" rel="stylesheet" />
+
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
@@ -287,30 +289,47 @@
     <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="../assets/demo/demo.js"></script>
+     <!-- sweet alert -->
+     <script src="../assets/jssweetalert2.min.js"></script>
     
     <script>
    $(document).ready(function() {
 
 $("#delReq").click(function() {
-var btn = $(this);
-	var theId = $("#delReq").data("id"); 
-$.ajax({
-	url: 'delete-job-function.php' ,
-	data: { ID : theId },
-	type : 'POST' })
-	
-	.done(function(data){
-		btn.parent("td").parent("tr").fadeOut(500, function() {
-		btn.remove(); });
-		console.log(data);
+    var btn = $(this);
+	var theId = $("#delReq").data("id");
+    Swal({
+        title: ' هل أنت متأكد ؟',
+        text: " لن تتمكن من استعادة هذا السجل ان قمت بالموافقة",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: ' أجل , قم بالمسح !',
+        cancelButtonText: '  إلغاء '
+        }).then((result) => {
+        if (result.value) {
+            $.ajax({
+        	url: 'delete-job-function.php' ,
+	        data: { ID : theId },
+	        type : 'POST' })
 
-	}) 
+            .done(function(data){
+	    	btn.parent("td").parent("tr").fadeOut(500, function() {
+		    btn.remove(); 
+            Swal(
+            ' تم المسح !',
+            ' تم مسح السجل الذي قمت بإحتياره بنجاح',
+            'success' )
+         });
+        }) 
+             .fail(function(data){
+	    	console.log("error");
+ 		     alert("error") ;
+	        });
+          } 
+        })
 
-	.fail(function(data){
-		console.log("error");
- 		 alert("error") ;
-	});
-	
 }); 
 });
         
