@@ -32,6 +32,7 @@
    <!-- CSS Files -->
    <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
    <link href="../assets/css/material-dashboard-rtl.css?v=1.1" rel="stylesheet" />
+   <link href="../assets/css/sweetalert2.min.css" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
@@ -151,12 +152,16 @@ $query = '';
 
 // Select All  Except Admin 
 
-$stmt = $con->prepare("SELECT *
-,city.name as city
+$stmt = $con->prepare("SELECT 	
+user.ID as userID,
+user.firstName,
+user.lastName,
+user.email,
+user.phone,
+city.name as city
  FROM user
  INNER JOIN city ON user.city_ID = city.ID
   WHERE userType_ID != 3 $query ORDER BY user.ID DESC");
-
 // Execute The Statement
 
 $stmt->execute();
@@ -215,32 +220,227 @@ if (! empty($rows)) {
                        <?php
                        foreach($rows as $row) {
                         echo "<tr>";
-                          echo "<td>" . $row['ID'] . "</td>";
+                          echo "<td>" . $row['userID'] . "</td>";
                           echo "<td>" . $row['firstName'] . "</td>";
                           echo "<td>" . $row['lastName'] . "</td>";
                           echo "<td>" . $row['email'] . "</td>";
                           echo "<td>" . $row['phone'] ."</td>";
                           echo "<td>" . $row['city'] ."</td>";
                           
-                          echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='btn btn-primary btn-link btn-sm'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+                          echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='btn btn-primary btn-link btn-sm'  data-toggle='modal' data-target='#editModal'> <i class='material-icons'>edit</i> </button>" . " </td> ";
                           echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm' id='delrequest' 
-                          data-id='". $row['ID'] ."'> <i class='material-icons'>close</i> </button> " . " </td> ";
+                          data-id='". $row['userID'] ."'> <i class='material-icons'>close</i> </button> " . " </td> ";
                             
                           
                         echo "</tr>";
                       }
                        ?>
+                       
+                     <!-- Modal -->
+                     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">تعديل بيانات المستخدم</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                    <form>
+                                                                <div class="row">
+                                                                <div class="col-md-7">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> الاسم الاول </label>
+                                                                    <input type="text" class="form-control" > 
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-5">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> الاسم الاخير </label>
+                                                                    <input type="email" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> البريد الالكتروني </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> رقم الهاتف </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                    <label class="bmd-label-floating"> المدينة </label>
+                                                                    <input type="text" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                                </div>
+                                                          
+                                                            </form>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                                                        <button type="button" class="btn btn-primary">حفظ التغيرات</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>
                                 
                       </tbody>
                     </table>
+                    
                   </div>
-                  
+                 
                 </div>
+              
               </div>
+              </div>
+				<a href="members.php?do=Add" class="btn btn-primary"  data-toggle='modal' data-target='#edModal'>
+					<i class="fa fa-plus"></i>  اضافة عضو جديد
+				</a>
+			</div>
             </div>
           </div>
         </div>
       </div>
+      <div class="modal fade" id="edModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                           <h5 class="modal-title" id="exampleModalCenterTitle">تعديل بيانات المستخدم</h5>
+                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                           </button>
+                         </div>
+                           <div class="modal-body">
+                             <form>
+                                <div class="row">
+                                 <div class="col-md-6">
+                                   <div class="form-group">
+                                    <label class="bmd-label-floating"> الاسم الاول </label>
+                                    <input type="text" class="form-control" name="firstName"> 
+                                    </div>
+                               </div>
+                              <div class="col-md-6">
+                               <div class="form-group">
+                                <label class="bmd-label-floating"> الاسم الاخير </label>
+                                  <input type="text" class="form-control" name="lastName">
+                                </div>
+                               </div>
+                            </div>
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                   <label class="bmd-label-floating"> البريد الالكتروني </label>
+                                   <input type="email" class="form-control" name="email">
+                                 </div>
+                                 </div>
+                                    <div class="col-md-6">
+                                     <div class="form-group">
+                                         <label class="bmd-label-floating"> رقم الهاتف </label>
+                                         <input type="text" class="form-control">
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                   <label class="bmd-label-floating"> كلمة المرور </label>
+                                   <input type="password" class="form-control" name="pass">
+                                 </div>
+                                 </div>
+                    
+                    
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                       
+                                    <select class="form-control"  name="location" data-constraints="@Selected">
+                                         <option label=" اختر المدينة " selected="selected"></option>
+                                           <?php
+                                               global $con;
+                                               $query = $con->prepare("SELECT * FROM city;");
+
+                                               $query->execute();
+
+                                              $cities = $query->fetchAll();
+
+                                               foreach($cities as $city) {
+                                                     echo '<option value="' . $city['ID'] . '">' . $city["name"] .'</option>';
+                                               }
+
+                                          ?>
+                                     </select>
+                                      </div>
+                                    </div>
+                                  </div>
+                                 <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                       
+                                    <select class="form-control"  name="userType" data-constraints="@Selected" id="userType">
+													
+												
+                          <option label=" اختر نوع المستخدم " selected="selected"></option>
+                          <?php
+                          global $con;
+                          $query = $con->prepare("SELECT * FROM user_type;");
+
+                         $query->execute();
+
+                         $userTypes = $query->fetchAll();
+
+                         foreach($userTypes as $type) {
+                             echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
+                         }
+
+                          ?>
+                      </select>
+                                  </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                       
+                                    <select  class="form-control"  data-placeholder="اختر الصنف " name="spec" data-constraints="@Selected" >
+                                                            <option label="اختر مجال عملك " selected="selected"></option>
+                                                            <?php
+                                                            global $con;
+                                                            $query = $con->prepare("SELECT * FROM specialization;");
+
+                                                           $query->execute();
+
+                                                           $categories = $query->fetchAll();
+
+                                                           foreach($categories as $category) {
+                                                               echo '<option value="' . $category['ID'] . '">' . $category["Name"] .'</option>';
+                                                           }
+
+                                                            ?>
+                                                        </select>
+                                  </div>
+                                </div>
+                                </div>
+                                                          
+              </form>
+         </div>
+                 <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
+                      <button type="button" class="btn btn-primary">اضافة عضو</button>
+          </div>
+            </div>
+             </div>
+             </div>
+    
       <?php }} ?>
       <footer class="footer">
         <div class="container-fluid">
@@ -298,6 +498,7 @@ if (! empty($rows)) {
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
+  <script src="../assets/jssweetalert2.min.js"></script>
   <script>
     $(document).ready(function() {
       $().ready(function() {
@@ -471,7 +672,18 @@ if (! empty($rows)) {
    $(document).ready(function(){
      $("#delrequest").click(function(){
        var ths = $(this);
-       var thId = $("#delRequest").data("id");
+       var thId = $("#delrequest").data("id");
+       Swal({
+        title: ' هل أنت متأكد ؟',
+        text: " لن تتمكن من استعادة هذا السجل ان قمت بالموافقة",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: ' أجل , قم بالمسح !',
+        cancelButtonText: '  إغلاق '
+        }).then((result) => {
+        if (result.value) {
 
        $.ajax({
          url: "delete-member-function.php",
@@ -481,12 +693,18 @@ if (! empty($rows)) {
        .done(function(data){
          ths.parent("td").parent("tr").fadeOut(600, function(){
            ths.remove();
+           Swal(
+            ' تم المسح !',
+            ' تم مسح السجل الذي قمت بإحتياره بنجاح',
+            'success' )
          });
-         console.log(data);
+        
        })
        .fail(function(data){
           alert("error");
        });
+        }
+        })
 
      });
    });
