@@ -154,18 +154,26 @@
 
     $stmt = $con->prepare("SELECT 
                   request.*, 
-                  specialization.Name AS spec , 
-                  user.firstName , user.lastName
+                  specialization.Name AS spec , job_type.type AS jobType ,
+                  user.firstName , user.lastName , city.name AS cityName
                 FROM 
-                  request
-                INNER JOIN 
-                specialization 
+                    request
+                INNER JOIN
+                    city 
                 ON 
-                specialization.ID = request.specialization_ID 
+                    request.city_ID = city.ID
+                INNER JOIN 
+                    specialization 
+                ON 
+                  specialization.ID = request.specialization_ID 
                 INNER JOIN 
                   customer
                 ON 
                   customer.ID = request.customer_ID
+                INNER JOIN 
+                    job_type 
+                ON 
+                    job_type.ID = request.jobType_ID
                 INNER JOIN 
                   user
                 ON 
@@ -200,7 +208,7 @@
                                                     <th> العنوان </th>
                                                     <th> الوصف </th>
                                                     <th> السعر </th>
-                                                    <th> مجال العمل </th>
+                                                    <th> البريد الإلكتروني  </th>
                                                     <th> تاريخ النشر </th>
                                                     <th> تـــعديــل </th>
                                                     <th> حــــذف </th>
@@ -209,20 +217,21 @@
                                                     <?php
                             foreach($items as $item) {
                               echo "<tr>";
-                                echo "<td>" . $item['ID'] . "</td>";
-                                echo "<td style='max-width:100px;'>" . $item['title'] . "</td>";
-                                echo "<td style='max-width:300px;'>" . $item['discription'] . "</td>";
-                                echo "<td>" . $item['initialPrice'] . "</td>";
-                                echo "<td>" . $item['spec'] ."</td>";
-                                echo "<td>" . $item['time'] ."</td>";
-                                echo "<td>" . " <button type='button'  title='Edit Task' class='btn btn-primary btn-link btn-sm' data-toggle='modal' data-target='#editModal'> <i class='material-icons'>edit</i> </button>" . " </td> ";
-                                echo "<td> <button type='button'  title='Remove' class='btn btn-danger btn-link btn-sm' id='delReq'
+                                echo "<td >" . $item['ID'] . "</td>";
+                                echo "<td style='max-width:100px;' class='jobTitle'>" . $item['title'] . "</td>";
+                                echo "<td style='max-width:300px;' class='jobDiscription'>" . $item['discription'] . "</td>";
+                                echo "<td class='jobPrice'>" . $item['initialPrice'] . "</td>";
+                                echo "<td class='jobEmail'>" . $item['email'] ."</td>";
+                                echo "<td class='jobTime'>" . $item['time'] ."</td>";
+                                echo "<td>" . " <button type='button' title='Edit Task' class='editReq btn btn-primary btn-link btn-sm' data-toggle='modal' data-target='#editModal' 
+                                 data-id='". $item['ID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+                                echo "<td> <button type='button' title='Remove' class='delReq btn btn-danger btn-link btn-sm' 
                                  data-id='". $item['ID'] ."'> <i class='material-icons'>close</i> </button> </td> ";
                                 echo "</tr>";
-                            } 
+                                 }
                             ?>
-                                    <!-- Modal -->
-                                                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                  <!-- Modal -->
+                                  <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content">
                                                     <div class="modal-header">
@@ -231,19 +240,38 @@
                                                         <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
+                                                    
                                                     <div class="modal-body">
-                                                    <form>
+                                                    <form id="reqForm">
                                                                 <div class="row">
+                                                                <div>
+                                                                    <input type="hidden" id="jobID" name="ID"/>
+                                                                </div>
                                                                 <div class="col-md-7">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> عنوان الوظيفة </label>
-                                                                    <input type="text" class="form-control" > 
+                                                                    <input type="text" class="form-control" id="jobTitle" name="title"> 
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-5">
-                                                                    <div class="form-group">
-                                                                    <label class="bmd-label-floating"> المدينة </label>
-                                                                    <input type="email" class="form-control">
+                                                                    <div class="form-group">                                                                            
+                                                                                    <select class="form-control" id="jobCity" data-placeholder="اختر مدينتك " name="city_ID" data-constraints="@Selected">
+                                                                                        <option selected="selected">  اختر مدينتك </option>
+                                                                                        <?php
+                                                                                        global $con;
+                                                                                        $query = $con->prepare("SELECT * FROM city;");
+
+                                                                                    $query->execute();
+
+                                                                                    $cities = $query->fetchAll();
+
+                                                                                    foreach($cities as $city) {
+                                                                                        echo '<option value="' . $city['ID'] . '">' . $city["name"] .'</option>';
+                                                                                    }
+
+                                                                                        ?>
+                                                                                    </select>
+                                                                           
                                                                     </div>
                                                                 </div>
                                                                 </div>
@@ -251,13 +279,28 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> السعر </label>
-                                                                    <input type="text" class="form-control">
+                                                                    <input type="text" class="form-control" id="jobPrice" name="initialPrice">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                    <label class="bmd-label-floating"> نوع الوظيفة </label>
-                                                                    <input type="text" class="form-control">
+                                                                        <select class="form-control" id="jobType" data-placeholder=" اختر نوع الوظيفة " name="jobType_ID" data-constraints="@Selected">
+                                                                            <option label=" اختر نوع الوظيفة " selected="selected"> اختر نوع الوظيفة </option>
+                                                                            <?php
+                                                                            global $con;
+                                                                            $query = $con->prepare("SELECT * FROM job_type;");
+
+                                                                                    $query->execute();
+
+                                                                                    $types = $query->fetchAll();
+
+                                                                                    foreach($types as $type) {
+                                                                                        echo '<option value="' . $type['ID'] . '">' . $type["type"] .'</option>';
+                                                                                    }
+
+                                                                                        ?>
+                                                                        </select>
+                                                                    
                                                                     </div>
                                                                 </div>
                                                                 </div>
@@ -265,40 +308,53 @@
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> البريد الإلكتروني </label>
-                                                                    <input type="text" class="form-control">
+                                                                    <input type="email" class="form-control" id="jobEmail" name="email">
                                                                     </div>
                                                                 </div>
                                                                 </div>
                                                                 <div class="row">
-                                                                
+
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
-                                                                    <label class="bmd-label-floating"> مجال العمل </label>
-                                                                    <input type="text" class="form-control">
+                                                                        <select class="form-control" id="jobSpec" data-placeholder= "اختر الصنف " name="specialization_ID" data-constraints="@Selected">
+                                                                                <option label=" اختر مجال العمل " selected="selected"> اختر مجال العمل </option>
+                                                                                <?php
+                                                                                global $con;
+                                                                                $query = $con->prepare("SELECT * FROM specialization;");
+
+                                                                            $query->execute();
+
+                                                                            $categories = $query->fetchAll();
+
+                                                                            foreach($categories as $category) {
+                                                                                echo '<option value="' . $category['ID'] . '">' . $category["Name"] .'</option>';
+                                                                            }
+
+                                                                                ?>
+                                                                            </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> تاريخ النشر </label>
-                                                                    <input type="text" class="form-control">
+                                                                    <input type="text" class="form-control" id="jobDate" name="time">
                                                                     </div>
                                                                 </div>
                                                                 </div>
                                                                 <div class="row">
                                                                 <div class="col-md-12">
                                                                     <div class="form-group">
-                                                                    
                                                                         <label class="bmd-label-floating"> وصف الوظيفة </label>
-                                                                        <textarea class="form-control" rows="5"></textarea>
-                                                                    
+                                                                        <textarea class="form-control" rows="7" id="jobDiscription" name="discription"></textarea>
                                                                     </div>
                                                                 </div>
-                                                                </div>
-                                                            </form>
-                                                    </div>
+                                                            </div>
+                                                          </form>
+                                                       </div>
+                                                    
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                                                        <button type="button" class="btn btn-primary">حفظ التغيرات</button>
+                                                        <button type="subnit" class="btn btn-primary" id="reqBtn" form="reqForm" > حفظ التغيرات </button>
                                                     </div>
                                                     </div>
                                                 </div>
@@ -307,11 +363,7 @@
                                          </table>
                                      </div>
                                  </div>
-                               </div>
-                            </div>
                         </div>
-                    </div>
-
                     <?php }}
 					 ?>
             </div>
@@ -376,10 +428,13 @@
     
     <script>
    $(document).ready(function() {
+       var editBtn ;
+   // delete item 
+   $(".delReq").click(function() {
 
-$("#delReq").click(function() {
     var btn = $(this);
-	var theId = $("#delReq").data("id");
+	var theId = $(this).data("id");
+    console.log(theId);
     Swal({
         title: ' هل أنت متأكد ؟',
         text: " لن تتمكن من استعادة هذا السجل ان قمت بالموافقة",
@@ -410,12 +465,71 @@ $("#delReq").click(function() {
  		     alert("error") ;
 	        });
           } 
-        })
+        });
 
 }); 
+
 });
         
-    </script>
+</script>
+
+<script>
+// edit item
+$(".editReq").click(function() {
+    var btn = $(this);
+    editBtn = $(this);
+	var jobId = $(this).data("id");
+
+    $.ajax({
+            dataType: 'json',
+        	url: 'get-job-details.php' ,
+	        data: { ID : jobId },
+	        type : 'POST' })
+
+        .done(function(response){
+            $('#jobID').val(response.ID);
+            $('#jobTitle').val(response.title);
+            $('#jobCity').val(response.city_ID);
+            $('#jobPrice').val(response.initialPrice);
+            $('#jobType').val(response.jobType_ID);
+            $('#jobEmail').val(response.email);
+            $('#jobSpec').val(response.specialization_ID);
+            $('#jobDate').val(response.time);
+            $('#jobDiscription').val(response.discription);
+        })
+
+        .fail(function(response){
+ 		    alert("error") ;
+	    });
+});
+// form 
+
+$("#reqForm").submit(function(e) {
+    e.preventDefault();
+    console.log($(this).serialize());
+    $.ajax({
+        	url: 'update-job-details.php' ,
+	        data: $(this).serialize() ,
+            type : 'POST' })
+
+        .done(function(response){
+            editBtn.parent("td").siblings(".jobTitle").html($('#jobTitle').val());
+            editBtn.parent("td").siblings(".jobDiscription").html($('#jobDiscription').val());
+            editBtn.parent("td").siblings(".jobPrice").html($('#jobPrice').val());
+            editBtn.parent("td").siblings(".jobEmail").html($('#jobEmail').val());
+            editBtn.parent("td").siblings(".jobTime").html($('#jobDate').val());
+            $('#reqForm')[0].reset();
+            $("#editModal").modal('toggle');
+        })
+
+        .fail(function(xhr, status, error){
+            console.log(xhr.responseText);
+            console.log("fail");
+	    });
+
+});
+
+ </script>
 </body>
 
 <?php
