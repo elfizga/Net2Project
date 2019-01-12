@@ -354,7 +354,7 @@
                                                     
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                                                        <button type="subnit" class="btn btn-primary" id="reqBtn" form="reqForm" > حفظ التغيرات </button>
+                                                        <button type="submit" class="btn btn-primary" id="reqBtn" form="reqForm" > حفظ التغيرات </button>
                                                     </div>
                                                     </div>
                                                 </div>
