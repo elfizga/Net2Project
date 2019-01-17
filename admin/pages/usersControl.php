@@ -221,14 +221,14 @@ if (! empty($rows)) {
                        foreach($rows as $row) {
                         echo "<tr>";
                           echo "<td>" . $row['userID'] . "</td>";
-                          echo "<td>" . $row['firstName'] . "</td>";
-                          echo "<td>" . $row['lastName'] . "</td>";
-                          echo "<td>" . $row['email'] . "</td>";
-                          echo "<td>" . $row['phone'] ."</td>";
-                          echo "<td>" . $row['city'] ."</td>";
+                          echo "<td class='fname'>" . $row['firstName'] . "</td>";
+                          echo "<td  class='lname'>" . $row['lastName'] . "</td>";
+                          echo "<td class='email'>" . $row['email'] . "</td>";
+                          echo "<td class='phone'>" . $row['phone'] ."</td>";
+                          echo "<td class='city'>" . $row['city'] ."</td>";
                           
-                          echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='btn btn-primary btn-link btn-sm'  data-toggle='modal' data-target='#editModal'> <i class='material-icons'>edit</i> </button>" . " </td> ";
-                          echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='btn btn-danger btn-link btn-sm' id='delrequest' 
+                          echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='editrequest btn btn-primary btn-link btn-sm'  data-toggle='modal' data-target='#editModal'  data-id='". $row['userID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+                          echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='delrequest btn btn-danger btn-link btn-sm' 
                           data-id='". $row['userID'] ."'> <i class='material-icons'>close</i> </button> " . " </td> ";
                             
                           
@@ -247,18 +247,22 @@ if (! empty($rows)) {
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                    <form>
+                                                    <form id="reqForm">
+                                                                <div class="row">
+                                                                <div>
+                                                                    <input type="hidden" id="memberId" name="ID"/>
+                                                                </div>
                                                                 <div class="row">
                                                                 <div class="col-md-7">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> الاسم الاول </label>
-                                                                    <input type="text" class="form-control" > 
+                                                                    <input type="text" class="form-control" id="fname"> 
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-5">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> الاسم الاخير </label>
-                                                                    <input type="email" class="form-control">
+                                                                    <input type="text" class="form-control" id="lname">
                                                                     </div>
                                                                 </div>
                                                                 </div>
@@ -266,30 +270,44 @@ if (! empty($rows)) {
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> البريد الالكتروني </label>
-                                                                    <input type="text" class="form-control">
+                                                                    <input type="text" class="form-control" id="email">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                     <label class="bmd-label-floating"> رقم الهاتف </label>
-                                                                    <input type="text" class="form-control">
+                                                                    <input type="text" class="form-control" id="phone">
                                                                     </div>
                                                                 </div>
                                                                 </div>
-                                                                <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                    <label class="bmd-label-floating"> المدينة </label>
-                                                                    <input type="text" class="form-control">
-                                                                    </div>
-                                                                </div>
-                                                                </div>
+                                                                <div class="col-md-6">
+                                    <div class="form-group">
+                                       
+                                    <select class="form-control"  name="location" data-constraints="@Selected" id="city">
+                                         <option label=" اختر المدينة " selected="selected"></option>
+                                           <?php
+                                               global $con;
+                                               $query = $con->prepare("SELECT * FROM city;");
+
+                                               $query->execute();
+
+                                              $cities = $query->fetchAll();
+
+                                               foreach($cities as $city) {
+                                                     echo '<option value="' . $city['ID'] . '">' . $city["name"] .'</option>';
+                                               }
+
+                                          ?>
+                                     </select>
+                                      </div>
+                                    </div>
+                                  </div>
                                                           
                                                             </form>
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                                                        <button type="button" class="btn btn-primary">حفظ التغيرات</button>
+                                                        <button type="submit" class="btn btn-primary" id="reqBtn" form="reqForm" > حفظ التغيرات </button>
                                                     </div>
                                                     </div>
                                                 </div>
@@ -316,13 +334,13 @@ if (! empty($rows)) {
                 <div class="modal-dialog modal-dialog-centered" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
-                           <h5 class="modal-title" id="exampleModalCenterTitle">تعديل بيانات المستخدم</h5>
+                           <h5 class="modal-title" id="exampleModalCenterTitle">اضافة مستخدم جديد</h5>
                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                            </button>
                          </div>
                            <div class="modal-body">
-                             <form>
+                             <form action="?do=Insert" method="POST">
                                 <div class="row">
                                  <div class="col-md-6">
                                    <div class="form-group">
@@ -435,12 +453,13 @@ if (! empty($rows)) {
          </div>
                  <div class="modal-footer">
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                      <button type="button" class="btn btn-primary">اضافة عضو</button>
+                       <input type="submit" value="اضافة العضو" class="btn btn-primary btn-lg" />
           </div>
             </div>
              </div>
              </div>
-    
+            
+            
       <?php }} ?>
       <footer class="footer">
         <div class="container-fluid">
@@ -670,9 +689,9 @@ if (! empty($rows)) {
       });
     });
    $(document).ready(function(){
-     $("#delrequest").click(function(){
+     $(".delrequest").click(function(){
        var ths = $(this);
-       var thId = $("#delrequest").data("id");
+       var thId = $(".delrequest").data("id");
        Swal({
         title: ' هل أنت متأكد ؟',
         text: " لن تتمكن من استعادة هذا السجل ان قمت بالموافقة",
@@ -708,6 +727,61 @@ if (! empty($rows)) {
 
      });
    });
+  $('.editrequest').click(function(){
+    var btn = $(this);
+    editBtn = $(this);
+    var memberId = $(this).data("id");
+    
+    $.ajax({
+            dataType: 'json',
+        	url: 'get-member-details.php' ,
+	        data: { ID : memberId },
+	        type : 'POST' })
+
+      .done(function(response){
+        $('#memberId').val(response.ID);
+        $('#fname').val(response.firstName);
+        $('#lname').val(response.lastName);
+        $('#email').val(response.email);
+        $('#phone').val(response.phone);
+        $('#city').val(response.city_ID);
+
+      })
+      .fail(function(response){
+        alert('error');
+
+      });
+      });
+
+     $('#reqForm').submit(function(e){
+       e.preventDefault();
+       console.log($(this).serialize());
+       $.ajax({
+        url: 'update-member.php' ,
+	        data: $(this).serialize() ,
+            type : 'POST'})
+
+       .done(function(response){
+            editBtn.parent("td").siblings(".fname").html($('#fname').val());
+            editBtn.parent("td").siblings(".lname").html($('#lname').val());
+            editBtn.parent("td").siblings(".email").html($('#email').val());
+            editBtn.parent("td").siblings(".phone").html($('#phone').val());
+            editBtn.parent("td").siblings(".city").html($('#city').val());
+            $('#reqForm')[0].reset();
+            $("#editModal").modal('toggle');
+        })
+
+        .fail(function(xhr, status, error){
+            console.log(xhr.responseText);
+            console.log("fail");
+	    });
+
+     })
+
+
+
+
+
   </script>
 </body>
 <?php
