@@ -1,6 +1,4 @@
-<?php
-        include 'include/db_connnection.php';
-    ?>
+    <?php include 'include/db_connnection.php'; ?>
     <!DOCTYPE html>
     <html class="wide wow-animation" lang="ar">
 
@@ -88,7 +86,7 @@
                         </div>
                     </section>
                     <?php  
-        if(isset($_GET['jobId'])){
+            if(isset($_GET['jobId'])){
             $id=$_GET['jobId'];
             $sql = " 
             SELECT request.title ,  request.time , request.request_img  , request.initialPrice , request.discription ,request.url , request.email , user.firstname, user.lastname, city.name as city_name , specialization.Name as spec_name 
@@ -110,8 +108,7 @@
                                     <div class="col-lg-8">
                                         <div class="layout-details">
                                             <article class="company-light company-light_1">
-                                                <figure class="company-light-logo"><img class="company-light-logo-image" src="images/<?php echo $result['request_img']; ?>" alt="" style=" max-width: 100%;
-    max-height: 100%;" />
+                                                <figure class="company-light-logo"><img class="company-light-logo-image" src="images/<?php echo $result['request_img']; ?>" alt="" style=" max-width: 100%;max-height: 100%;" />
                                                 </figure>
                                                 <div class="company-light-main">
                                                     <h5 class="company-light-title"><?php echo $result['firstname'] . " " . $result['lastname'] ; ?></h5>
@@ -226,18 +223,18 @@
                                             <div class="row row-30 row-lg-50">
                                                 <div class="col-md-6 col-lg-12">
                                                     <?php
-                                 if(isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
-                                    if($_SESSION['userType'] == 2) { ?>
+                                                      if(isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
+                                                        if($_SESSION['userType'] == 2) { ?>
 
                                                         <form class="contact-form " action="<?php echo $_SERVER['REQUEST_URI'] ?>" method="post">
 
                                                             <div class="alert alert-danger hide_alert <?php
-                                            if($isError == true) { echo 'show_alert'; } ?>" id="erralert">
+                                                              if($isError == true) { echo 'show_alert'; } ?>" id="erralert">
                                                                 <strong> <?php echo $message; ?> </strong>
                                                             </div>
-                                                            <?php if (isset($success)) {
-                                            echo $success ;
-                                        } ?>
+                                                             <?php if (isset($success)) {
+                                                            echo $success ;
+                                                             } ?>
 
                                                                 <h4> تقديم طلب وظيفة  </h4>
                                                                 <br>

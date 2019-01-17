@@ -182,7 +182,7 @@
                                     
                                     <div class="rd-form rd-mailform form-lg" novalidate="novalidate">
                                         <div class="alert alert-danger hide_alert <?php
-                         if($isError == true) { echo'show_alert';} ?>" id="erralert" style="display:none;">
+                                          if($isError == true) { echo'show_alert';} ?>" id="erralert" style="display:none;">
                                             <strong> <?php echo $message ?> </strong>
                                         </div>
 
