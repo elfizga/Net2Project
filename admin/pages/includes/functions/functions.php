@@ -148,3 +148,10 @@
 		return $rows;
 
 	}
+
+	function getUserInfo($userid) {
+        global $con;
+        $query = $con->prepare("SELECT * FROM user WHERE ID = ?");
+        $query->execute( array($userid) );
+        return $query->fetch();
+    }

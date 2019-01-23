@@ -36,7 +36,10 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="../assets/demo/demo.css" rel="stylesheet" />
 </head>
-
+<?php
+$isError = false ;
+$message ="";
+?>
 <body class="" style="direction: rtl;">
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
@@ -315,152 +318,32 @@ if (! empty($rows)) {
                                 
                       </tbody>
                     </table>
+
                     
                   </div>
+                  </div>
+				
                  
                 </div>
               
               </div>
               </div>
-				<a href="members.php?do=Add" class="btn btn-primary"  data-toggle='modal' data-target='#edModal'>
-					<i class="fa fa-plus"></i>  اضافة عضو جديد
-				</a>
+              <div>
+					  <button type='button' rel='tooltip' title='add'> <i class="fa fa-plus"></i>
+            <a href="addMember.php">اضافة عضو </a></button> 
+			
+			</div>
 			</div>
             </div>
           </div>
         </div>
       </div>
-      <div class="modal fade" id="edModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                           <h5 class="modal-title" id="exampleModalCenterTitle">اضافة مستخدم جديد</h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                           </button>
-                         </div>
-                           <div class="modal-body">
-                             <form action="?do=Insert" method="POST">
-                                <div class="row">
-                                 <div class="col-md-6">
-                                   <div class="form-group">
-                                    <label class="bmd-label-floating"> الاسم الاول </label>
-                                    <input type="text" class="form-control" name="firstName"> 
-                                    </div>
-                               </div>
-                              <div class="col-md-6">
-                               <div class="form-group">
-                                <label class="bmd-label-floating"> الاسم الاخير </label>
-                                  <input type="text" class="form-control" name="lastName">
-                                </div>
-                               </div>
-                            </div>
-                              <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                   <label class="bmd-label-floating"> البريد الالكتروني </label>
-                                   <input type="email" class="form-control" name="email">
-                                 </div>
-                                 </div>
-                                    <div class="col-md-6">
-                                     <div class="form-group">
-                                         <label class="bmd-label-floating"> رقم الهاتف </label>
-                                         <input type="text" class="form-control">
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="row">
-                                <div class="col-md-6">
-                                  <div class="form-group">
-                                   <label class="bmd-label-floating"> كلمة المرور </label>
-                                   <input type="password" class="form-control" name="pass">
-                                 </div>
-                                 </div>
-                    
-                    
-                                  <div class="col-md-6">
-                                    <div class="form-group">
-                                       
-                                    <select class="form-control"  name="location" data-constraints="@Selected">
-                                         <option label=" اختر المدينة " selected="selected"></option>
-                                           <?php
-                                               global $con;
-                                               $query = $con->prepare("SELECT * FROM city;");
-
-                                               $query->execute();
-
-                                              $cities = $query->fetchAll();
-
-                                               foreach($cities as $city) {
-                                                     echo '<option value="' . $city['ID'] . '">' . $city["name"] .'</option>';
-                                               }
-
-                                          ?>
-                                     </select>
-                                      </div>
-                                    </div>
-                                  </div>
-                                 <div class="row">
-                                  <div class="col-md-12">
-                                    <div class="form-group">
-                                       
-                                    <select class="form-control"  name="userType" data-constraints="@Selected" id="userType">
-													
-												
-                          <option label=" اختر نوع المستخدم " selected="selected"></option>
-                          <?php
-                          global $con;
-                          $query = $con->prepare("SELECT * FROM user_type;");
-
-                         $query->execute();
-
-                         $userTypes = $query->fetchAll();
-
-                         foreach($userTypes as $type) {
-                             echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
-                         }
-
-                          ?>
-                      </select>
-                                  </div>
-                                </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-md-12">
-                                    <div class="form-group">
-                                       
-                                    <select  class="form-control"  data-placeholder="اختر الصنف " name="spec" data-constraints="@Selected" >
-                                                            <option label="اختر مجال عملك " selected="selected"></option>
-                                                            <?php
-                                                            global $con;
-                                                            $query = $con->prepare("SELECT * FROM specialization;");
-
-                                                           $query->execute();
-
-                                                           $categories = $query->fetchAll();
-
-                                                           foreach($categories as $category) {
-                                                               echo '<option value="' . $category['ID'] . '">' . $category["Name"] .'</option>';
-                                                           }
-
-                                                            ?>
-                                                        </select>
-                                  </div>
-                                </div>
-                                </div>
-                                                          
-              </form>
-         </div>
-                 <div class="modal-footer">
-                       <button type="button" class="btn btn-secondary" data-dismiss="modal">إغلاق</button>
-                       <input type="submit" value="اضافة العضو" class="btn btn-primary btn-lg" />
-          </div>
-            </div>
-             </div>
-             </div>
+      <?php }} ?> 
+     
+     
             
             
-      <?php }} ?>
+      
       <footer class="footer">
         <div class="container-fluid">
           <div class="copyright float-right">
@@ -776,13 +659,15 @@ if (! empty($rows)) {
             console.log("fail");
 	    });
 
-     })
+     });
+   
 
 
 
+  
 
 
-  </script>
+</script>
 </body>
 <?php
 ob_end_flush(); // Release The Output

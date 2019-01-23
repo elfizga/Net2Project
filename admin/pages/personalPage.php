@@ -1,3 +1,11 @@
+<?php
+        session_start();
+        ob_start();
+        include 'layout/init.php';
+
+        $user = getUserInfo($_SESSION['userId']);
+
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,6 +29,7 @@
 </head>
 
 <body class="" style="direction: rtl;">
+
   <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
       <div class="logo">
@@ -113,7 +122,7 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="personalPage.php"> الملف الشخصي </a>
+                  <a class="dropdown-item" href="<?php echo 'companies-page.php?adminId=' . $result['ID'] . ' '?>"> الملف الشخصي </a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="logout.php"> تسجيل الخروج</a>
                 </div>
@@ -203,24 +212,18 @@
                 </div>
               </div>
             </div>
+           
             <div class="col-md-4">
               <div class="card card-profile">
                 <div class="card-avatar">
                   <a href="#pablo">
-                    <img class="img" src="../assets/img/faces/elfizga.jpg" />
+                    <img class="img" src="../assets/img/<?php echo $user['user_img']; ?>" />
                   </a>
                 </div>
                 <div class="card-body">
-                  <h3 class="card-category text-gray"> لازورد الفيزقة  </h3>
+                  <h3 class="card-category text-gray"> <?php echo $user['firstName'] . " " . $user['lastName']; ?> </h3>
                   <p class="card-description">
-                   طالبة تقنية معلومات 
-                   طالبة تقنية معلومات 
-                   طالبة تقنية معلومات 
-                   طالبة تقنية معلومات 
-                   طالبة تقنية معلومات 
-                   طالبة تقنية معلومات 
-                   طالبة تقنية معلومات 
-                    .... 
+                  <?php echo $user['bio']; ?>
                   </p>
                 </div>
               </div>
