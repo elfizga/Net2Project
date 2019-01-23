@@ -9,7 +9,7 @@
     <html class="wide wow-animation" lang="en">
 
     <head>
-        <title> الملف الشخصي </title>
+        <title> الملف الذاتي </title>
         <meta name="viewport" content="width=device-width height=device-height initial-scale=1.0">
         <meta charset="utf-8">
         <link rel="icon" href=" images/koop_logo.png" type="image/x-icon">
@@ -32,7 +32,7 @@
                 position: relative;
                 z-index: 1;
             }
-            
+
             html.ie-10 .ie-panel,
             html.lt-ie-10 .ie-panel {
                 display: block;
@@ -45,11 +45,11 @@
         <div class="page" style="opacity: 1;">
             <!-- Page Header-->
             <?php include 'include/header.php';?>
-                <?php 
+                <?php
         if(isset($_GET['customerId'])){
             $id=$_GET['customerId'];
-            $sql = " 
-            SELECT 
+            $sql = "
+            SELECT
             user.firstname, user.lastname , city.name as city_name , customer.ID as customerId, user.user_img, bio
             FROM user
             INNER JOIN city ON user.city_ID = city.ID
@@ -81,7 +81,7 @@
                                                 </figure>
                                                 <div class="company-light-main">
                                                     <h5 class="company-light-title"><?php echo $result['firstname'] . " " . $result['lastname']; ?></h5>
-                                        
+
                                                     <p class="object-inline object-inline_sm"><span><?php echo $result['city_name']; ?> ليبيا</span></p>
                                                 </div>
                                             </article>
@@ -114,13 +114,13 @@
 
                                         <?php
                         $sql = "
-                            SELECT 
-                            request.ID, request.title, request.initialPrice, user.firstname, 
+                            SELECT
+                            request.ID, request.title, request.initialPrice, user.firstname,
                                 user.lastname, job_type.type, city.name , request.request_img
-                            FROM request 
+                            FROM request
                             INNER JOIN city ON request.city_ID = city.ID
                             INNER JOIN customer ON customer.ID = request.customer_ID
-                            INNER JOIN job_type ON job_type.ID = request.jobType_ID 
+                            INNER JOIN job_type ON job_type.ID = request.jobType_ID
                             INNER JOIN user ON user.ID = customer.user_ID
                             WHERE customer_ID = ?
                             ;
