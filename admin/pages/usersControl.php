@@ -1,16 +1,10 @@
 <?php 
 
  ob_start(); // Output Buffering Start
-  
  $pageTitle = 'Members';
-
-
   include 'layout/init.php';
   
   $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
-  
- 
-
 
 ?>
 
