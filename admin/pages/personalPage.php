@@ -2,6 +2,7 @@
         session_start();
         ob_start();
         include 'layout/init.php';
+        
 
         $user = getUserInfo($_SESSION['userId']);
 
