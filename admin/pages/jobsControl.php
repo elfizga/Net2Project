@@ -1,7 +1,9 @@
 <?php 
+	if (isset($_SESSION['userId'])) {
 include 'layout/init.php';
 $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
 ob_start(); // Output Buffering Start
+
 $pageTitle = 'Requests';
 ?>
 <!DOCTYPE html>
@@ -558,8 +560,15 @@ $("#reqForm").submit(function(e) {
 });
 
  </script>
-          </body>
-        <?php
+ <?php
+} else {
+
+  header('Location: index.php');
+  
+  exit();
+  }
 ob_end_flush(); // Release The Output
 ?>
+          </body>
+       
         </html>

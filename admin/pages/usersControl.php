@@ -1,8 +1,10 @@
 <?php 
 ob_start(); // Output Buffering Start
 $pageTitle = 'Members';
+if(isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
 include 'layout/init.php';
 $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -706,6 +708,16 @@ echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
 
      });
 </script>
+<?php
+} else {
+
+  header('Location: index.php');
+  
+  exit();
+  }
+ob_end_flush(); // Release The Output
+?>
+
 </body>
 <?php
 ob_end_flush(); // Release The Output
