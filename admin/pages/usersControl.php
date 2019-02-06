@@ -1,8 +1,10 @@
 <?php 
+
+include 'layout/init.php';
+session_start();
 ob_start(); // Output Buffering Start
 $pageTitle = 'Members';
 if(isset($_SESSION['userId']) && $_SESSION['userId'] > 0) {
-include 'layout/init.php';
 $do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
 
 ?>

@@ -106,7 +106,7 @@
                                         </div>
                                     </div>
                                     <h4 class="heading-decorated_1"> نبذة </h4>
-                                    <p class="text-style-1">
+                                    <p class="text-style-1" style="width">
                                         <?php echo $result['bio']; ?>
                                     </p>
                                     <h4 class="heading-decorated_1">وظائف تم نشرها بواسطة هذا الزبون </h4>

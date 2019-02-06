@@ -1,6 +1,30 @@
 <?php
         include 'include/db_connnection.php';
     ?>
+
+<?php  
+        if(isset($_GET['workerId'])){
+            $id=$_GET['workerId'];
+            $sql = " 
+            SELECT 
+            user.firstname, user.lastname, user.date , specialization.Name as spec_name , city.name as city_name , technician.ID as workerId, user.user_img, bio 
+            FROM user
+            INNER JOIN city ON user.city_ID = city.ID
+            INNER JOIN technician ON technician.user_ID = user.ID
+            INNER JOIN specialization ON technician.specialization_ID = specialization.ID 
+            WHERE
+            technician.ID = ?";
+                       global $con;
+                        $query = $con->prepare($sql);
+                        $query->execute(array($id));
+                        $workerResult = $query->fetch();
+
+                        if(empty($workerResult)) {
+                            header("location: index.php");
+                        }
+
+                        
+                        ?>
     <!DOCTYPE html>
     <html class="wide wow-animation desktop landscape rd-navbar-static-linked" lang="en">
 
@@ -53,43 +77,22 @@
                         <div class="parallax-content">
                             <div class="container">
                                 <div class="layout-2">
-                                    <?php  
-        if(isset($_GET['workerId'])){
-            $id=$_GET['workerId'];
-            $sql = " 
-            SELECT 
-            user.firstname, user.lastname, user.date , specialization.Name as spec_name , city.name as city_name , technician.ID as workerId, user.user_img, bio 
-            FROM user
-            INNER JOIN city ON user.city_ID = city.ID
-            INNER JOIN technician ON technician.user_ID = user.ID
-            INNER JOIN specialization ON technician.specialization_ID = specialization.ID 
-            WHERE
-            technician.ID = ?";
-                       global $con;
-                        $query = $con->prepare($sql);
-                        $query->execute(array($id));
-                        $result = $query->fetch();
-
-                        if(empty($result)) {
-
-                            header("Location: index.php");
-                        }
-                        ?>
+                                   
                                         <div class="layout-2-item layout-2-item-main">
-                                            <article class="profile-light"><img class="profile-light-image" src="images/<?php echo $result['user_img']; ?>" alt="">
+                                            <article class="profile-light"><img class="profile-light-image" src="images/<?php echo $workerResult['user_img']; ?>" alt="">
                                                 <div class="profile-light-main">
-                                                    <h4 class="profile-light-name"><?php echo $result['firstname'] . " " . $result['lastname'] ?></h4>
-                                                    <h6 class="profile-light-position"> <?php echo $result['spec_name'] ?> </h6>
+                                                    <h4 class="profile-light-name"><?php echo $workerResult['firstname'] . " " . $workerResult['lastname'] ?></h4>
+                                                    <h6 class="profile-light-position"> <?php echo $workerResult['spec_name'] ?> </h6>
                                                     <div class="profile-light-divider"></div>
                                                     <ul class="profile-light-list">
-                                                        <li><span class="icon icon-sm mdi mdi-map-marker"></span><span> <?php echo $result['city_name'] ?> , ليبيا </span></li>
+                                                        <li><span class="icon icon-sm mdi mdi-map-marker"></span><span> <?php echo $workerResult['city_name'] ?> , ليبيا </span></li>
                                                     </ul>
                                                 </div>
                                             </article>
                                         </div>
                                         <div class="layout-2-item text-center text-lg-left">
                                             <span> تاريخ الإنضمام : </span >
-                 <span> <?php echo $result['date'] ; ?> </span>
+                 <span> <?php echo $workerResult['date'] ; ?> </span>
                                         </div>
                                 </div>
                             </div>
@@ -107,7 +110,7 @@
                                             </div>
                                             <hr>
                                             <p class="text-style-1">
-                                                <?php echo $result['bio']; ?>
+                                                <?php echo $workerResult['bio']; ?>
                                             </p>
                                         </div>
 

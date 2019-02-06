@@ -1,8 +1,11 @@
 <?php 
-	if (isset($_SESSION['userId'])) {
+	
 include 'layout/init.php';
-$do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
+session_start();
 ob_start(); // Output Buffering Start
+if (isset($_SESSION['userId'])) {
+$do = isset($_GET['do']) ? $_GET['do'] : 'Manage';
+
 
 $pageTitle = 'Requests';
 ?>
@@ -158,8 +161,40 @@ $pageTitle = 'Requests';
         </nav>
         <!-- End Navbar -->
         <div class="content">
-          <?php
-//session_start();
+          
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-primary">
+                    <h4 class="card-title "> جدول إدارة الوظائف
+                    </h4>
+                    <p class="card-category"> لعرض كافة تفاصيل الوظائف التي تم نشرها في النظام 
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class=" text-primary">
+                          <th> رقم الوظيفة 
+                          </th>
+                          <th> العنوان 
+                          </th>
+                          <th> الوصف 
+                          </th>
+                          <th> السعر 
+                          </th>
+                          <th> البريد الإلكتروني  
+                          </th>
+                          <th> تاريخ النشر 
+                          </th>
+                          <th> تـــعديــل 
+                          </th>
+                          <th> حــــذف 
+                          </th>
+                        </thead>
+                        <tbody>
+                        <?php
 if ($do == 'Manage') {
 $stmt = $con->prepare("SELECT 
 request.*, 
@@ -195,38 +230,6 @@ $stmt->execute();
 $items = $stmt->fetchAll();
 if (! empty($items)) {
 ?>
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header card-header-primary">
-                    <h4 class="card-title "> جدول إدارة الوظائف
-                    </h4>
-                    <p class="card-category"> لعرض كافة تفاصيل الوظائف التي تم نشرها في النظام 
-                    </p>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                      <table class="table">
-                        <thead class=" text-primary">
-                          <th> رقم الوظيفة 
-                          </th>
-                          <th> العنوان 
-                          </th>
-                          <th> الوصف 
-                          </th>
-                          <th> السعر 
-                          </th>
-                          <th> البريد الإلكتروني  
-                          </th>
-                          <th> تاريخ النشر 
-                          </th>
-                          <th> تـــعديــل 
-                          </th>
-                          <th> حــــذف 
-                          </th>
-                        </thead>
-                        <tbody>
                           <?php
 foreach($items as $item) {
 echo "<tr>";
@@ -300,14 +303,14 @@ echo '<option value="' . $city['ID'] . '">' . $city["name"] .'</option>';
                                             <option label=" اختر نوع الوظيفة " selected="selected"> اختر نوع الوظيفة 
                                             </option>
                                             <?php
-global $con;
-$query = $con->prepare("SELECT * FROM job_type;");
-$query->execute();
-$types = $query->fetchAll();
-foreach($types as $type) {
-echo '<option value="' . $type['ID'] . '">' . $type["type"] .'</option>';
-}
-?>
+                                              global $con;
+                                              $query = $con->prepare("SELECT * FROM job_type;");
+                                              $query->execute();
+                                              $types = $query->fetchAll();
+                                              foreach($types as $type) {
+                                              echo '<option value="' . $type['ID'] . '">' . $type["type"] .'</option>';
+                                              }
+                                              ?>
                                           </select>
                                         </div>
                                       </div>
@@ -328,14 +331,14 @@ echo '<option value="' . $type['ID'] . '">' . $type["type"] .'</option>';
                                             <option label=" اختر مجال العمل " selected="selected"> اختر مجال العمل 
                                             </option>
                                             <?php
-global $con;
-$query = $con->prepare("SELECT * FROM specialization;");
-$query->execute();
-$categories = $query->fetchAll();
-foreach($categories as $category) {
-echo '<option value="' . $category['ID'] . '">' . $category["Name"] .'</option>';
-}
-?>
+                                              global $con;
+                                              $query = $con->prepare("SELECT * FROM specialization;");
+                                              $query->execute();
+                                              $categories = $query->fetchAll();
+                                              foreach($categories as $category) {
+                                              echo '<option value="' . $category['ID'] . '">' . $category["Name"] .'</option>';
+                                              }
+                                              ?>
                                           </select>
                                         </div>
                                       </div>
@@ -374,19 +377,12 @@ echo '<option value="' . $category['ID'] . '">' . $category["Name"] .'</option>'
                   </div>
                 </div>
                 <?php }}
-?>
-              </div>
-              <footer class="footer">
-                <div class="container-fluid">
-                  <div class="copyright float-right">
-                    copyrights &copy; 2019
-                    <br>
-                    <br>
-                  </div>
-                </div>
-              </footer>
+              ?>
+              </div>    
+            </div>
             </div>
           </div>
+          
           <!--   Core JS Files   -->
           <script src="../assets/js/core/jquery.min.js">
           </script>
