@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -532,8 +533,11 @@
 
     });
   </script>
-</body>
-<?php
+  <?php
+   
 ob_end_flush(); // Release The Output
 ?>
+ 
+</body>
+
 </html>

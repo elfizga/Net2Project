@@ -1,7 +1,8 @@
 <?php
-        session_start();
+session_start();
         ob_start();
         include 'layout/init.php';
+        if (isset($_SESSION['userId'])) {
 
         $user = getUserInfo($_SESSION['userId']);
 
@@ -45,6 +46,7 @@
               <p>الرئيسية</p>
             </a>
           </li>
+          
           <li class="nav-item active ">
             <a class="nav-link" href="personalPage.php">
               <i class="material-icons">person</i>
@@ -287,6 +289,14 @@
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
+  <?php
+   } else {
 
+    header('Location: index.php');
+    
+    exit();
+    }
+ob_end_flush(); // Release The Output
+?>
 </body>
 </html>
