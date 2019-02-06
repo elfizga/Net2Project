@@ -39,6 +39,7 @@
         $city      = $_POST["location"];
         $userType  = $_POST["userType"];
         $spec      = $_POST["spec"];
+        $bio       = $_POST["bio"];
 
         if(empty($firstname)){
             $message .= " من فضلك ادخل الاسم الاول <br />" ;
@@ -85,12 +86,13 @@
          email = ? ,
          password = ? ,
          phone = ?,
+         bio = ?,
          city_ID = ?,
          userType_ID = ? ;  ");
 
 $query->execute(
     array(
-     $firstname , $lastname  , $email, $pass , $phone , $city ,$userType
+     $firstname , $lastname  , $email, $pass , $phone , $bio , $city ,$userType
     ));
 
     $id = $con->lastInsertId();
@@ -99,14 +101,15 @@ $query->execute(
         $query = $con->prepare("INSERT INTO technician
         SET 
         user_ID = ?,
-        specialization_ID = ?;
+        specialization_ID = ?,
+        bio = ?;
         
 
     ");
 
     $query->execute(
         array(
-            $id , $spec
+            $id , $spec , $bio
         )
     ); 
     } 
@@ -114,12 +117,13 @@ $query->execute(
         $query = $con->prepare("INSERT INTO customer
         SET 
         user_ID = ?
+        bio = ?;
         
         ");
 
         $query->execute(
             array(
-                $id 
+                $id , $bio
             ));
     }
     
@@ -329,6 +333,16 @@ $query->execute(
             </div>
          </div>
     </div>
+    <div class="row">
+                                      <div class="col-md-12">
+                                        <div class="form-group">
+                                          <label class="bmd-label-floating"> bio 
+                                          </label>
+                                          <textarea class="form-control"  id="bio" name="bio">
+                                          </textarea>
+                                        </div>
+                                      </div>
+                                    </div>
                  <div class="row">
                       
                       <div class="col-md-6">
@@ -359,6 +373,7 @@ $query->execute(
                         </div>
                       </div>
                     </div>
+                    
                    
                     
                     <button type="submit" class="btn btn-primary pull-right"> اضافة </button>

@@ -374,12 +374,12 @@ echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
               </div>
             </div>
             <div>
-          <button type='button' rel='tooltip' title='add'> 
+          
             <i class="fa fa-plus">
             </i>
             <a href="addMember.php">اضافة عضو 
             </a>
-          </button> 
+          
         </div>
       </div>
     </div>
