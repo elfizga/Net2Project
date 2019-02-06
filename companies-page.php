@@ -1,6 +1,4 @@
 <?php
-        session_start();
-        ob_start();
         include 'include/db_connnection.php';
 
     ?>

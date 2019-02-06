@@ -108,7 +108,7 @@
                                     <div class="col-lg-8">
                                         <div class="layout-details">
                                             <article class="company-light company-light_1">
-                                                <figure class="company-light-logo"><img class="company-light-logo-image" src="images/<?php echo $result['request_img']; ?>" alt="" style=" max-width: 100%;max-height: 100%;" />
+                                                <figure class="company-light-logo"><img class="company-light-logo-image" src="images/<?php echo $result['request_img']; ?>" alt="" style=" width: 100%; height: 100%;" />
                                                 </figure>
                                                 <div class="company-light-main">
                                                     <h5 class="company-light-title"><?php echo $result['firstname'] . " " . $result['lastname'] ; ?></h5>

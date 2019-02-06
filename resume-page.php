@@ -129,27 +129,28 @@
                   $q->execute(array($_GET['workerId'])) ;
                   $results = $q->fetchAll();
                   if($results != null){
-                  foreach($results as $result){
-                  ?>
+                    foreach($results as $result){
+                    ?>
 
-                                                    <div class="col-sm-6">
-                                                        <a class="thumbnail-classic" href="#">
-                                                            <figure class="thumbnail-classic-figure"><img class="thumbnail-classic-image" src="images/<?php echo $result['imageURL']; ?>" alt="">
-                                                            </figure>
-                                                            <div class="thumbnail-classic-caption">
-                                                                <p class="heading-9 thumbnail-classic-title">
-                                                                    <?php echo $result['title'] ?>
-                                                                </p>
-                                                                <p class=" thumbnail-classic-title">
-                                                                    <?php echo $result['description'] ; ?>
-                                                                </p>
-                                                            </div>
-                                                            <div class="thumbnail-classic-dummy"></div>
-                                                        </a>
-                                                    </div>
+                            <div class="col-sm-6">
+                                <a class="thumbnail-classic" href="#">
+                                    <figure class="thumbnail-classic-figure"><img class="thumbnail-classic-image" src="images/<?php echo $result['imageURL']; ?>" alt="">
+                                    </figure>
+                                    <div class="thumbnail-classic-caption">
+                                        <p class="heading-9 thumbnail-classic-title">
+                                            <?php echo $result['title'] ?>
+                                        </p>
+                                        <p class=" thumbnail-classic-title">
+                                            <?php echo $result['description'] ; ?>
+                                        </p>
+                                    </div>
+                                    <div class="thumbnail-classic-dummy"></div>
+                                </a>
+                            </div>
 
-                                                    <?php 
-                  }}
+                            <?php 
+                    }
+                }
                   else 
                   {
                       echo " لا يوجد أعمال سابقة " ;
