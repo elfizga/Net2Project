@@ -97,8 +97,7 @@
                         </div>
                     </div>
                 </section>
-                
-               
+
                 <section class="section section-md bg-gray-100">
                     <div class="container">
                         <div class="row row-40">
@@ -108,6 +107,9 @@
                             <div class="col-12">
                                 <div class="table-job-listing-2-outer">
                                     <table class="table-job-listing-2 table-responsive">
+
+                                    <!-- view recent jobs -->
+
                                         <?php 
                         $sql = "
                             SELECT 
@@ -139,16 +141,10 @@
                                                     </article>
                                                 </td>
                                                 <td class="table-job-listing-date"><span><?php echo $result['initialPrice'] . 'د.ل' ?> </span></td>
-                                                <td class="table-job-listing-badge"><span class="badge "><?php
-                                    echo $result['type'];
-                                ?></span></td>
+                                                <td class="table-job-listing-badge"><span class="badge "><?php echo $result['type'];?></span></td>
                                             </tr>
 
-                                            <?php
-                        }
-
-                        ?>
-
+                                            <?php } ?>
                                     </table>
                                 </div>
                             </div>
@@ -157,15 +153,13 @@
                     </div>
                 </section>
 
-
-
                 <br>
                 <br>
                 <section class="section section-md bg-gray-100">
                     <div class="container">
                         <div class="row row-30">
                             <div class="col-lg-6 height-fill">
-                                <figure class="figure-responsive"><img src="images/about-us-1-573x368.jpg" alt="" />
+                                <figure class="figure-responsive"><img src="images/meeting.png" alt="" height="300" />
                                 </figure>
                             </div>
                             <div class="col-lg-6 height-fill">
@@ -224,7 +218,7 @@
         <div class="snackbars" id="form-output-global"></div>
         <script src="js/core.min.js"></script>
         <script src="js/script.js"></script>
-        
+
         <script type="text/javascript">
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-7078796-5']);
@@ -239,4 +233,5 @@
             })();
         </script>
     </body>
-   </html>
+
+    </html>
