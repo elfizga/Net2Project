@@ -345,16 +345,7 @@ echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
                                         </div>
                                       </div>
                                      
-                                    <div class="row">
-                                      <div class="col-md-12">
-                                        <div class="form-group">
-                                          <label class="bmd-label-floating"> bio 
-                                          </label>
-                                          <textarea class="form-control" rows="7" id="bio" name="bio">
-                                          </textarea>
-                                        </div>
-                                      </div>
-                                    </div>
+                                   
                                   </form>
                                 </div>
                                 <div class="modal-footer">
@@ -673,7 +664,7 @@ echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
         $('#date').val(response.date);
         $('#userType').val(response.userType_ID);
         $('#password').val(response.password);
-        $('#bio').val(response.bio);
+       
         
         
 

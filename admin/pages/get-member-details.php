@@ -18,7 +18,7 @@ $query1 = $con->prepare(" SELECT * FROM user WHERE user.ID = ? " );
         $Array['city_ID'] = $row['city_ID'];
         $Array['userType_ID'] = $row['userType_ID'];
         $Array['date'] = $row['date'];
-        $Array['bio'] = $row['bio'];
+        
          
     }
 
