@@ -124,7 +124,7 @@ session_start();
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="<?php echo 'companies-page.php?adminId=' . $result['ID'] . ' '?>"> الملف الشخصي </a>
+                  <a class="dropdown-item" href="<?php echo 'personalPage.php?adminId=' . $user['ID'] . ' '?>"> الملف الشخصي </a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="logout.php"> تسجيل الخروج</a>
                 </div>
@@ -144,71 +144,100 @@ session_start();
                   <p class="card-category"> أكمل بياناتك الشخصية </p>
                 </div>
                 <div class="card-body">
-                  <form>
-                    <div class="row">
-                     
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"> اسم المستخدم </label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-7">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"> البريد الإلكتروني</label>
-                          <input type="email" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"> الإسم الأول </label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"> الإسم الأخير </label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"> مجال العمل </label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"> المدينة  </label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating"> رقم الهاتف </label>
-                          <input type="text" class="form-control">
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-group">
-                          <label>نبذة عني </label>
-                          <div class="form-group">
-                            <label class="bmd-label-floating">   نبذة مختصرة نبذة مختصرة نبذة مختصرة نبذة مختصرة </label>
-                            <textarea class="form-control" rows="5"></textarea>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary pull-right"> تحديث الملف  الشخصي </button>
+                <form id="reqForm">
+                                    <div class="row">
+                                      <div>
+                                        <input type="hidden" id="memberId" name="ID" data-id= "<?php echo  $user['ID']  ?>">
+                                      </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-7">
+                                          <div class="form-group">
+                                            <label class="bmd-label-floating"> 
+                                            </label>
+                                            <input type="text" class="form-control" id="fname" name="firstName"> 
+                                          </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                          <div class="form-group">
+                                            <label class="bmd-label-floating"> 
+                                            </label>
+                                            <input type="text" class="form-control" id="lname" name="lastName">
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-6">
+                                          <div class="form-group">
+                                            <label class="bmd-label-floating">  
+                                            </label>
+                                            <input type="text" class="form-control" id="email" name="email">
+                                          </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                          <div class="form-group">
+                                            <label class="bmd-label-floating"> 
+                                            </label>
+                                            <input type="text" class="form-control" id="phone" name="phone">
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <div class="form-group">
+                                            <select class="form-control"  name="city_ID" data-constraints="@Selected" id="city">
+                                              <option label=" اختر المدينة " selected="selected">
+                                              </option>
+<?php
+global $con;
+$query = $con->prepare("SELECT * FROM city;");
+$query->execute();
+$cities = $query->fetchAll();
+foreach($cities as $city) {
+echo '<option value="' . $city['ID'] . '">' . $city["name"] .'</option>';
+}
+?>
+                                            </select>
+                                          </div>
+                                        </div> 
+                                        </div>
+                                      <div class="row">                                       
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label class="bmd-label-floating">
+                                          </label>
+                                          <input type="text" class="form-control" id="date" name="date">
+                                        </div>
+                                      </div>                                                                            
+                                        <div class="col-md-6">
+                                          <div class="form-group">
+                                            <select class="form-control"  name="userType_ID" data-constraints="@Selected" id="userType">
+                                              <option label=" اختر نوع المستخدم " selected="selected">
+                                              </option>
+<?php
+global $con;
+$query = $con->prepare("SELECT * FROM user_type;");
+$query->execute();
+$userTypes = $query->fetchAll();
+foreach($userTypes as $type) {
+echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
+}
+?>
+                                            </select>
+                                          </div>
+                                        </div>
+                                        </div>
+                                        <div class="row">
+                                        <div class="col-md-12">
+                                          <div class="form-group">
+                                            <label class="bmd-label-floating">
+                                            </label>
+                                            <input type="password" class="form-control" name="password" id="password">
+                                          </div>
+                                        </div>
+                                      </div>
+                  
+                    <button type="submit" class="btn btn-primary pull-right" > تحديث الملف  الشخصي </button>
                     <div class="clearfix"></div>
                   </form>
                 </div>
@@ -225,7 +254,7 @@ session_start();
                 <div class="card-body">
                   <h3 class="card-category text-gray"> <?php echo $user['firstName'] . " " . $user['lastName']; ?> </h3>
                   <p class="card-description">
-                  <?php echo $user['bio']; ?>
+                
                   </p>
                 </div>
               </div>
@@ -289,6 +318,34 @@ session_start();
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
+  <script>
+  $(document).ready(function(){
+    memberId = $('#memberId').data("id");
+    
+    $.ajax({
+            dataType: 'json',
+        	url: 'get-member-details.php' ,
+	        data: { ID : memberId },
+	        type : 'POST' })
+
+      .done(function(response){
+        $('#memberId').val(response.ID);
+        $('#fname').val(response.firstName);
+        $('#lname').val(response.lastName);
+        $('#email').val(response.email);
+        $('#phone').val(response.phone);
+        $('#city').val(response.city_ID);
+        $('#date').val(response.date);
+        $('#userType').val(response.userType_ID);
+        $('#password').val(response.password);
+
+      })
+      .fail(function(response){
+        alert('error');
+
+      });
+      });
+  </script>
   <?php
    } else {
 

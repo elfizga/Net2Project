@@ -312,7 +312,7 @@ echo '<option value="' . $city['ID'] . '">' . $city["name"] .'</option>';
                                       <div class="row">                                       
                                       <div class="col-md-6">
                                         <div class="form-group">
-                                          <label class="bmd-label-floating"> تاريخ النشر 
+                                          <label class="bmd-label-floating"> تاريخ الانضمام
                                           </label>
                                           <input type="text" class="form-control" id="date" name="date">
                                         </div>
