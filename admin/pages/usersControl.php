@@ -174,6 +174,7 @@ user.firstName,
 user.lastName,
 user.email,
 user.phone,
+user.date,
 city.name as city
 FROM user
 INNER JOIN city ON user.city_ID = city.ID
@@ -189,6 +190,14 @@ if (! empty($rows)) {
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header card-header-primary">
+                  <div style="text-align:left;">
+          
+          <i class="fa fa-plus">
+          </i>
+          <a href="addMember.php" style="color:white;">اضافة عضو 
+          </a>
+        
+      </div>
                     <h4 class="card-title "> جدول ادارة المستخدمين
                     </h4>
                     <p class="card-category">جدول لعرض كافة مستخدمين النظام   
@@ -214,7 +223,7 @@ if (! empty($rows)) {
                             رقم الهاتف
                           </th>
                           <th>
-                            المدينة             
+                          تاريخ الانضمام            
                           </th>
                           <th>
                             تـــعديــل   
@@ -232,7 +241,7 @@ echo "<td class='fname'>" . $row['firstName'] . "</td>";
 echo "<td  class='lname'>" . $row['lastName'] . "</td>";
 echo "<td class='email'>" . $row['email'] . "</td>";
 echo "<td class='phone'>" . $row['phone'] ."</td>";
-echo "<td class='city'>" . $row['city'] ."</td>";
+echo "<td class='date'>" . $row['date'] ."</td>";
 echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='editrequest btn btn-primary btn-link btn-sm'  data-toggle='modal' data-target='#editModal'  data-id='". $row['userID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
 echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='delrequest btn btn-danger btn-link btn-sm' 
 data-id='". $row['userID'] ."'> <i class='material-icons'>close</i> </button> " . " </td> ";
@@ -364,33 +373,20 @@ echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
                 </div>
               </div>
             </div>
-            <div>
-          
-            <i class="fa fa-plus">
-            </i>
-            <a href="addMember.php">اضافة عضو 
-            </a>
-          
-        </div>
+            
+           
       </div>
     </div>
     </div>
   </div>
+
 </div>
 <?php }} ?> 
-<footer class="footer">
-  <div class="container-fluid">
-    <div class="copyright float-right">
-      copyrights
-      &copy;
-      2019 
-      <br>
-      <br>
-    </div>
-  </div>
-</footer>
+
+
 </div>
 </div>
+
 <!--   Core JS Files   -->
 <script src="../assets/js/core/jquery.min.js">
 </script>
@@ -689,7 +685,7 @@ echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
             editBtn.parent("td").siblings(".lname").html($('#lname').val());
             editBtn.parent("td").siblings(".email").html($('#email').val());
             editBtn.parent("td").siblings(".phone").html($('#phone').val());
-            editBtn.parent("td").siblings(".city").html($('#city').val());
+            editBtn.parent("td").siblings(".date").html($('#date').val());
             $('#reqForm')[0].reset();
             $("#editModal").modal('toggle');
         })
