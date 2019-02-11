@@ -190,14 +190,6 @@ if (! empty($rows)) {
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header card-header-primary">
-                  <div style="text-align:left;">
-          
-          <i class="fa fa-plus">
-          </i>
-          <a href="addMember.php" style="color:white;">اضافة عضو 
-          </a>
-        
-      </div>
                     <h4 class="card-title "> جدول ادارة المستخدمين
                     </h4>
                     <p class="card-category">جدول لعرض كافة مستخدمين النظام   
@@ -242,8 +234,8 @@ echo "<td  class='lname'>" . $row['lastName'] . "</td>";
 echo "<td class='email'>" . $row['email'] . "</td>";
 echo "<td class='phone'>" . $row['phone'] ."</td>";
 echo "<td class='date'>" . $row['date'] ."</td>";
-echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='editrequest btn btn-primary btn-link btn-sm'  data-toggle='modal' data-target='#editModal'  data-id='". $row['userID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
-echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='delrequest btn btn-danger btn-link btn-sm' 
+echo "<td>" . " <button type='button' rel='tooltip' class='editrequest btn btn-primary btn-link btn-sm'  data-toggle='modal' data-target='#editModal'  data-id='". $row['userID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+echo "<td>" . " <button type='button' rel='tooltip' class='delrequest btn btn-danger btn-link btn-sm' 
 data-id='". $row['userID'] ."'> <i class='material-icons'>close</i> </button> " . " </td> ";
 echo "</tr>";
 }
@@ -373,7 +365,10 @@ echo '<option value="' . $type['ID'] . '">' . $type["typeName"] .'</option>';
                 </div>
               </div>
             </div>
-            
+            <div>
+          <a href="addMember.php">اضافة عضو 
+          </a>
+      </div> 
            
       </div>
     </div>
