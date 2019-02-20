@@ -159,7 +159,7 @@
                     <div class="container">
                         <div class="row row-30">
                             <div class="col-lg-6 height-fill">
-                                <figure class="figure-responsive"><img src="images/meeting.png" alt="" height="300" />
+                                <figure class="figure-responsive"><img src="images/2427_banner-Illustration.png" alt="" height="300" />
                                 </figure>
                             </div>
                             <div class="col-lg-6 height-fill">
