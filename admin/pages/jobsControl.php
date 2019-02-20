@@ -239,7 +239,8 @@ echo "<td style='max-width:300px;' class='jobDiscription'>" . $item['discription
 echo "<td class='jobPrice'>" . $item['initialPrice'] . "</td>";
 echo "<td class='jobEmail'>" . $item['email'] ."</td>";
 echo "<td class='jobTime'>" . $item['time'] ."</td>";
-echo "<td>" . " <button type='button' title='Edit Task' class='editReq btn btn-primary btn-link btn-sm' data-toggle='modal' data-target='#editModal' 
+echo "<td>" . " <button type='button' title='Edit Task' class='editReq btn btn-primary btn-link btn-sm' 
+data-toggle='modal' data-target='#editModal' 
 data-id='". $item['ID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
 echo "<td> <button type='button' title='Remove' class='delReq btn btn-danger btn-link btn-sm' 
 data-id='". $item['ID'] ."'> <i class='material-icons'>close</i> </button> </td> ";

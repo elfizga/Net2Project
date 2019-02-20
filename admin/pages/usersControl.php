@@ -242,8 +242,10 @@ echo "<td  class='lname'>" . $row['lastName'] . "</td>";
 echo "<td class='email'>" . $row['email'] . "</td>";
 echo "<td class='phone'>" . $row['phone'] ."</td>";
 echo "<td class='date'>" . $row['date'] ."</td>";
-echo "<td>" . " <button type='button' rel='tooltip' title='Edit Task' class='editrequest btn btn-primary btn-link btn-sm'  data-toggle='modal' data-target='#editModal'  data-id='". $row['userID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
-echo "<td>" . " <button type='button' rel='tooltip' title='Remove' class='delrequest btn btn-danger btn-link btn-sm' 
+echo "<td>" . " <button type='button' rel='tooltip'  
+class='editrequest btn btn-primary btn-link btn-sm'  data-toggle='modal' 
+data-target='#editModal'  data-id='". $row['userID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+echo "<td>" . " <button type='button' rel='tooltip' class='delrequest btn btn-danger btn-link btn-sm' 
 data-id='". $row['userID'] ."'> <i class='material-icons'>close</i> </button> " . " </td> ";
 echo "</tr>";
 }
