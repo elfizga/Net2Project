@@ -11,10 +11,6 @@ $date = $_POST['date'];
 $userType_ID = $_POST['userType_ID'];
 $password = $_POST['password'];
 
-
-
-
-
 $query1 = $con->prepare(" UPDATE user 
 SET firstName = ? , lastName = ? , email = ? , phone = ? , city_ID = ? , date = ? , userType_ID = ? ,
 password = ? 
