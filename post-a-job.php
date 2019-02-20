@@ -50,7 +50,7 @@
         </div>
         <?php 
      $isError = false ;
-     $message ="";
+     $message =""; 
      if ($_SERVER["REQUEST_METHOD"] == "POST"){
          $title=$_POST["job-title"];
          $type=$_POST["job-type"];

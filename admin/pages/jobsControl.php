@@ -195,6 +195,7 @@ $pageTitle = 'Requests';
                         </thead>
                         <tbody>
                         <?php
+<<<<<<< HEAD
 if ($do == 'Manage') {
 $stmt = $con->prepare("SELECT 
 request.*, 
@@ -247,6 +248,59 @@ data-id='". $item['ID'] ."'> <i class='material-icons'>close</i> </button> </td>
 echo "</tr>";
 }
 ?>
+=======
+                            if ($do == 'Manage') {
+                            $stmt = $con->prepare("SELECT 
+                            request.*, 
+                            specialization.Name AS spec , job_type.type AS jobType ,
+                            user.firstName , user.lastName , city.name AS cityName
+                            FROM 
+                            request
+                            INNER JOIN
+                            city 
+                            ON 
+                            request.city_ID = city.ID
+                            INNER JOIN 
+                            specialization 
+                            ON 
+                            specialization.ID = request.specialization_ID 
+                            INNER JOIN 
+                            customer
+                            ON 
+                            customer.ID = request.customer_ID
+                            INNER JOIN 
+                            job_type 
+                            ON 
+                            job_type.ID = request.jobType_ID
+                            INNER JOIN 
+                            user
+                            ON 
+                            user.ID = customer.user_ID
+                            ORDER BY 
+                            request.ID DESC");
+                            // Execute The Statement
+                            $stmt->execute();
+                            // Assign To Variable 
+                            $items = $stmt->fetchAll();
+                            if (! empty($items)) {
+                            ?>
+                                                      <?php
+                            foreach($items as $item) {
+                            echo "<tr>";
+                            echo "<td >" . $item['ID'] . "</td>";
+                            echo "<td style='max-width:100px;' class='jobTitle'>" . $item['title'] . "</td>";
+                            echo "<td style='max-width:300px;' class='jobDiscription'>" . $item['discription'] . "</td>";
+                            echo "<td class='jobPrice'>" . $item['initialPrice'] . "</td>";
+                            echo "<td class='jobEmail'>" . $item['email'] ."</td>";
+                            echo "<td class='jobTime'>" . $item['time'] ."</td>";
+                            echo "<td>" . " <button type='button' title='Edit Task' class='editReq btn btn-primary btn-link btn-sm' data-toggle='modal' data-target='#editModal' 
+                            data-id='". $item['ID'] ."'> <i class='material-icons'>edit</i> </button>" . " </td> ";
+                            echo "<td> <button type='button' title='Remove' class='delReq btn btn-danger btn-link btn-sm' 
+                            data-id='". $item['ID'] ."'> <i class='material-icons'>close</i> </button> </td> ";
+                            echo "</tr>";
+                            }
+                            ?>
+>>>>>>> 87dea952d3d750d02a0785177c9fbe9f97fe87d1
                           <!-- Modal -->
                           <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered" role="document">
